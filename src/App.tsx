@@ -24,7 +24,7 @@ function App() {
   const [result, setResult] = useState('')
   const [currentPrompt, setCurrentPrompt] = useState('')
   const [temperature, setTemperature] = useState(0.7)
-  const [maxTokens, setMaxTokens] = useState(200)
+  const [maxTokens, setMaxTokens] = useState(800)
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [historyList, setHistoryList] = useState<HistoryItem[]>([])
   const [copiedCode, setCopiedCode] = useState('')
@@ -144,30 +144,30 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-8 text-slate-100 md:px-8">
+    <div className="min-h-screen bg-slate-100 px-4 py-8 text-slate-800 md:px-8">
       <div className="mx-auto max-w-7xl">
         <header className="mb-8">
-          <h1 className="bg-gradient-to-r from-cyan-300 via-blue-300 to-violet-300 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
+          <h1 className="bg-gradient-to-r from-cyan-600 via-blue-600 to-violet-600 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
             智能写作助手
           </h1>
-          <p className="mt-3 text-sm text-slate-300 md:text-base">
+          <p className="mt-3 text-sm text-slate-600 md:text-base">
             选择写作模式，输入你的想法，实时生成高质量内容。
           </p>
         </header>
 
         <main className="grid gap-6 lg:grid-cols-2">
-          <section className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-cyan-900/20 backdrop-blur">
+          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/80">
             <form className="space-y-5" onSubmit={handleGenerate}>
               <label className="block space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold tracking-wide text-slate-100">
+                  <span className="text-sm font-semibold tracking-wide text-slate-800">
                     写作模式
                   </span>
-                  <span className="rounded-full border border-cyan-400/25 bg-cyan-400/10 px-2 py-0.5 text-xs text-cyan-200">
+                  <span className="rounded-full border border-cyan-300 bg-cyan-50 px-2 py-0.5 text-xs text-cyan-700">
                     6 种模式
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 rounded-xl border border-slate-700/90 bg-slate-950/90 p-2 md:grid-cols-3">
+                <div className="grid grid-cols-2 gap-2 rounded-xl border border-slate-200 bg-slate-50 p-2 md:grid-cols-3">
                   {modeOptions.map((item) => {
                     const isActive = mode === item.value
                     return (
@@ -176,8 +176,8 @@ function App() {
                         type="button"
                         onClick={() => setMode(item.value)}
                         className={`rounded-lg px-3 py-2 text-xs font-medium transition md:text-sm ${isActive
-                            ? 'bg-gradient-to-r from-cyan-400 to-violet-400 text-slate-900 shadow-lg shadow-cyan-500/20'
-                            : 'bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-slate-100'
+                          ? 'bg-gradient-to-r from-cyan-500 to-violet-500 text-white shadow-md shadow-cyan-200'
+                          : 'bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                           }`}
                       >
                         {item.label}
@@ -185,14 +185,14 @@ function App() {
                     )
                   })}
                 </div>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-500">
                   当前选择将决定提示词结构与输出风格。
                 </p>
               </label>
 
               <label className="block space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold tracking-wide text-slate-100">
+                  <span className="text-sm font-semibold tracking-wide text-slate-800">
                     输入内容
                   </span>
                   <span className="text-xs text-slate-500">
@@ -203,7 +203,7 @@ function App() {
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="请输入你的原始内容、主题或需求..."
-                  className="min-h-72 w-full resize-y rounded-xl border border-slate-700/90 bg-slate-950/90 px-4 py-3 text-sm leading-7 text-slate-100 shadow-inner shadow-slate-950/40 outline-none transition duration-200 placeholder:text-slate-500 hover:border-slate-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
+                  className="min-h-72 w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm leading-7 text-slate-800 shadow-inner shadow-slate-100 outline-none transition duration-200 placeholder:text-slate-400 hover:border-slate-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-300/40"
                 />
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span>描述越清晰，生成结果越贴合预期</span>
@@ -211,26 +211,26 @@ function App() {
                 </div>
               </label>
 
-              <div className="rounded-xl border border-slate-800 bg-slate-950/60">
+              <div className="rounded-xl border border-slate-200 bg-slate-50">
                 <button
                   type="button"
                   onClick={() => setShowAdvanced((previous) => !previous)}
-                  className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-200 transition hover:text-cyan-300"
+                  className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:text-cyan-700"
                 >
                   <span>高级设置</span>
-                  <span className="text-slate-400">
+                  <span className="text-slate-500">
                     {showAdvanced ? '收起' : '展开'}
                   </span>
                 </button>
 
                 {showAdvanced ? (
-                  <div className="space-y-4 border-t border-slate-800 px-4 py-4">
+                  <div className="space-y-4 border-t border-slate-200 px-4 py-4">
                     <label className="block space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium text-slate-200">
+                        <span className="font-medium text-slate-700">
                           创意度 (temperature)
                         </span>
-                        <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-cyan-300">
+                        <span className="rounded bg-cyan-50 px-2 py-0.5 font-mono text-cyan-700">
                           {temperature.toFixed(2)}
                         </span>
                       </div>
@@ -249,10 +249,10 @@ function App() {
 
                     <label className="block space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium text-slate-200">
+                        <span className="font-medium text-slate-700">
                           输出长度 (max_tokens)
                         </span>
-                        <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-violet-300">
+                        <span className="rounded bg-violet-50 px-2 py-0.5 font-mono text-violet-700">
                           {maxTokens}
                         </span>
                       </div>
@@ -275,15 +275,15 @@ function App() {
               <button
                 type="submit"
                 disabled={!canSubmit}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-violet-400 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? '生成中...' : `生成${modeLabelMap[mode]}`}
               </button>
             </form>
 
-            <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950/60 p-3">
+            <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3">
               <div className="mb-2 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-slate-200">历史记录</h3>
+                <h3 className="text-sm font-semibold text-slate-700">历史记录</h3>
                 <span className="text-xs text-slate-500">{historyList.length} 条</span>
               </div>
               <div className="max-h-56 space-y-2 overflow-y-auto pr-1">
@@ -293,10 +293,10 @@ function App() {
                       key={item.id}
                       type="button"
                       onClick={() => handleSelectHistory(item)}
-                      className="group w-full rounded-lg border border-slate-800 bg-slate-900/70 p-2 text-left transition hover:border-cyan-500/40"
+                      className="group w-full rounded-lg border border-slate-200 bg-white p-2 text-left transition hover:border-cyan-300"
                     >
                       <div className="mb-1 flex items-center justify-between gap-2">
-                        <span className="truncate text-xs text-slate-400">
+                        <span className="truncate text-xs text-slate-500">
                           {new Date(item.createdAt).toLocaleString()}
                         </span>
                         <span
@@ -313,12 +313,12 @@ function App() {
                               handleDeleteHistory(item.id)
                             }
                           }}
-                          className="rounded px-1.5 py-0.5 text-xs text-slate-500 transition hover:bg-rose-500/20 hover:text-rose-300"
+                          className="rounded px-1.5 py-0.5 text-xs text-slate-500 transition hover:bg-rose-100 hover:text-rose-600"
                         >
                           删除
                         </span>
                       </div>
-                      <p className="line-clamp-2 text-xs text-slate-300">
+                      <p className="line-clamp-2 text-xs text-slate-600">
                         {item.prompt}
                       </p>
                     </button>
@@ -330,30 +330,30 @@ function App() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-violet-900/20 backdrop-blur">
+          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/80">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold">生成结果</h2>
-              <span className="text-xs text-slate-400">Markdown 实时渲染</span>
+              <span className="text-xs text-slate-500">Markdown 实时渲染</span>
             </div>
 
             {error ? (
-              <div className="rounded-lg border border-rose-400/30 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">
+              <div className="rounded-lg border border-rose-300 bg-rose-50 px-3 py-2 text-sm text-rose-700">
                 {error}
               </div>
             ) : null}
 
             {currentPrompt ? (
-              <div className="mb-4 rounded-lg border border-slate-800 bg-slate-950/70 p-3">
+              <div className="mb-4 rounded-lg border border-slate-200 bg-slate-50 p-3">
                 <p className="mb-1 text-xs uppercase tracking-wide text-slate-500">
                   使用的提示词
                 </p>
-                <p className="line-clamp-4 whitespace-pre-wrap text-xs text-slate-300">
+                <p className="line-clamp-4 whitespace-pre-wrap text-xs text-slate-600">
                   {currentPrompt}
                 </p>
               </div>
             ) : null}
 
-            <article className="prose prose-invert prose-headings:text-slate-100 prose-p:text-slate-200 prose-a:text-cyan-300 prose-strong:text-white max-w-none h-[36rem] overflow-y-auto rounded-xl border border-slate-800 bg-slate-950/70 p-4 text-sm leading-7">
+            <article className="prose prose-slate prose-headings:text-slate-800 prose-p:text-slate-700 prose-a:text-cyan-700 prose-strong:text-slate-900 max-w-none h-[36rem] overflow-y-auto rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7">
               {result ? (
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
@@ -368,15 +368,15 @@ function App() {
                         )
                       }
                       return (
-                        <div className="my-4 overflow-hidden rounded-lg border border-slate-700 bg-slate-900">
-                          <div className="flex items-center justify-between border-b border-slate-700 px-3 py-2">
-                            <span className="text-xs text-slate-400">
+                        <div className="my-4 overflow-hidden rounded-lg border border-slate-300 bg-white">
+                          <div className="flex items-center justify-between border-b border-slate-200 px-3 py-2">
+                            <span className="text-xs text-slate-500">
                               {className?.replace('language-', '') || 'code'}
                             </span>
                             <button
                               type="button"
                               onClick={() => handleCopyCode(codeText)}
-                              className="rounded bg-slate-800 px-2 py-1 text-xs text-slate-200 transition hover:bg-slate-700"
+                              className="rounded bg-slate-100 px-2 py-1 text-xs text-slate-700 transition hover:bg-slate-200"
                             >
                               {copiedCode === codeText ? '已复制' : '复制代码'}
                             </button>
@@ -394,9 +394,9 @@ function App() {
                   {result}
                 </ReactMarkdown>
               ) : (
-                <p className="text-slate-400">
+                <p className="text-slate-500">
                   生成内容将在这里实时显示。当前模式：
-                  <strong className="ml-1 text-slate-200">{modeLabelMap[mode]}</strong>
+                  <strong className="ml-1 text-slate-700">{modeLabelMap[mode]}</strong>
                 </p>
               )}
             </article>
@@ -405,7 +405,7 @@ function App() {
                 type="button"
                 onClick={handleCopyResult}
                 disabled={!result.trim()}
-                className="rounded-md border border-slate-700 bg-slate-900 px-2.5 py-1 text-xs text-slate-200 transition hover:border-cyan-400 hover:text-cyan-200 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-md border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-700 transition hover:border-cyan-500 hover:text-cyan-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {copiedResult ? '已复制' : '复制结果'}
               </button>
