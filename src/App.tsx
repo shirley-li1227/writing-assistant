@@ -17,6 +17,11 @@ type HistoryItem = {
 }
 
 const HISTORY_STORAGE_KEY = 'writing-assistant-history'
+const isLocalHost =
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === '127.0.0.1'
+const apiBaseUrl =
+  import.meta.env.VITE_API_BASE_URL?.trim() || (isLocalHost ? 'http://localhost:8787' : '')
 
 function App() {
   const [mode, setMode] = useState<WritingMode>('continue')
@@ -66,7 +71,7 @@ function App() {
     setCurrentPrompt(prompt)
 
     try {
-      const response = await fetch('/api/generate', {
+      const response = await fetch(`${apiBaseUrl}/api/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
