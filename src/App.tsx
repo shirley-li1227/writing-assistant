@@ -22,6 +22,7 @@ const isLocalHost =
   window.location.hostname === '127.0.0.1'
 const apiBaseUrl =
   import.meta.env.VITE_API_BASE_URL?.trim() || (isLocalHost ? 'http://localhost:8787' : '')
+const apiGenerateUrl = apiBaseUrl ? `${apiBaseUrl}/api/generate` : '/api/generate'
 
 function App() {
   const [mode, setMode] = useState<WritingMode>('continue')
@@ -71,7 +72,7 @@ function App() {
     setCurrentPrompt(prompt)
 
     try {
-      const response = await fetch(`${apiBaseUrl}/api/generate`, {
+      let response = await fetch(apiGenerateUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -81,6 +82,18 @@ function App() {
           max_tokens: maxTokens,
         }),
       })
+      if (!response.ok && response.status === 404 && apiGenerateUrl !== '/api/generate') {
+        response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mode,
+            prompt,
+            temperature,
+            max_tokens: maxTokens,
+          }),
+        })
+      }
 
       if (!response.ok || !response.body) {
         const text = await response.text()
