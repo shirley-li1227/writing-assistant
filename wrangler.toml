@@ -1,0 +1,7 @@
+# Cloudflare Pages: connect this repo in the dashboard with
+# Build command: npm run build
+# Build output directory: dist
+# Then add environment variables: ZHIPU_API_KEY (secret), optional ZHIPU_MODEL
+name = "writing-assistant"
+compatibility_date = "2025-05-01"
+pages_build_output_dir = "dist"
